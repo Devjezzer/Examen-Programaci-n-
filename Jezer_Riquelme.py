@@ -58,6 +58,67 @@ def actualizar_precio(codigo, nuevo_precio, diccionarioinscripciones):
         return True
     else:
         return False
+    
+def validar_codigo(codigo):
+    return codigo.strip() != "" and codigo not in planes
+
+def validar_nombre(nombre):
+    return nombre.strip() != ""
+
+def validar_tipo(tipo):
+    return tipo.lower() in ["mensual", "trimestral","anual"]
+
+def validar_duracion(duracion):
+    return duracion.isdigit() and  int(duracion) > 0
+
+def validar_sn(valor):
+    return valor.lower() in ["s","n"]
+
+def validar_horario(horario):
+    return horario.strip() != ""
+
+def validar_precio(precio):
+    return precio.isdigit() and int(precio) >0
+
+def validar_cupos(cupos):
+    return cupos.isdigit() and int(cupos) >= 0
+
+def agregar_plan(lista):
+
+    codigo=input(" Ingrese código del plan: ")
+    nombre=input(" Ingrese nombre del plan: ")
+    tipo=input (" Ingrese tipo (mensual/trimestral/anual): ")
+    duracion =input("Ingrese duración (meses): ")
+    acceso_piscina=input("Ingrese duración (meses): ")
+    incluye_clases =input ("¿Incluye clases grupales? (s/n): ")
+    horario =input("Ingrese horario: ")
+    precio = input (" Ingrese precio: ")
+    cupos =input(" Ingrese cupos: ")
+
+    codigoValido=validar_codigo(codigo)
+    nombreValido=validar_nombre(nombre)
+    tipoValido = validar_tipo(tipo)
+    duracionValido =validar_duracion(duracion)
+    horarioValido=validar_horario(horario)
+    precioValido=validar_precio(precio)
+    cuposValido=validar_cupos(cupos)
+
+    if codigoValido == True and nombreValido == True and tipoValido == True and duracionValido == True and horarioValido == True and precioValido == True and cuposValido == True:
+        planes[codigo] = {
+            "nombre": nombre,
+            "tipo": tipo, 
+            "duracion": duracion,
+            "acceso_piscina":acceso_piscina,
+            "incluye_clases": incluye_clases,
+            "horario":horario,
+            "precio": precio, 
+            "cupos": cupos
+        }
+        inscripciones[codigo] =[]
+    else: 
+        print("Error, los datos no son validos")
+        
+
 
 def eliminar_plan(codigo_buscado, diccionarioplanes, diccionarioincripciones):
     if buscar_codigo(codigo_buscado, diccionarioplanes):
@@ -128,6 +189,8 @@ while True:
                 continue
             else:
                 break
+    elif opcionSeleccionada == 4:
+        agregar_plan(planes)
     elif opcionSeleccionada == 5:
         codigo_eliminar=input("Ingrese el codigo a eliminar: ")
         eliminado=eliminar_plan(codigo_eliminar, planes, inscripciones)
@@ -138,5 +201,4 @@ while True:
     elif opcionSeleccionada == 6:
         print("Programa finalizado.")
 
-    
                                      
